@@ -1,0 +1,100 @@
+/* ======================================================
+   Author: Joachim MASSON
+   For: Project 4 wild code school
+   Description: Index stylesheet for general graphic chart
+   ====================================================== */
+
+
+
+:root { 
+  /* color variable */ 
+  --background: #FFDB0F;
+  --primary-color: #FF0FB2;
+  --secondary-color: #0FF8FF;
+  --text:#010510;
+  --accent:#80476D;
+  --border: #477E80;
+  --bonus: #AA9B43;
+  --cloud: #F5F0E9;
+}
+
+/* Déclaration de la police */
+/* --- SIMPSON FONT - ALL TITLES --- */
+@font-face {
+  font-family: 'SimpsonFont'; 
+  src: url('./assets/fonts/simpsonfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Permet d'afficher une police système en attendant le chargement */
+}
+@font-face {
+  font-family: 'Helvetica';
+  src: url('./assets/fonts/Helvetica.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* --- HELVETICA BOLD --- */
+@font-face {
+  font-family: 'Helvetica';
+  src: url('./assets/fonts/Helvetica-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* --- HELVETICA LIGHT --- */
+@font-face {
+  font-family: 'Helvetica';
+  src: url('./assets/fonts/helvetica-light-587ebe5a59211.ttf') format('truetype');
+  font-weight: 300; /* Le standard pour Light */
+  font-style: normal;
+}
+
+/* --- HELVETICA OBLIQUE (Italic) --- */
+@font-face {
+  font-family: 'Helvetica';
+  src: url('./assets/fonts/Helvetica-Oblique.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+/* --- HELVETICA BOLD OBLIQUE --- */
+@font-face {
+  font-family: 'Helvetica';
+  src: url('./assets/fonts/Helvetica-BoldOblique.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+/* ===== RESET LIGHT ===== */
+
+::before,
+*::after {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: var( --background);
+  font-family: 'Helvetica', Arial, sans-serif;
+  font-weight: normal;
+  line-height: 1.6; /* Meilleure lisibilité pour les paragraphes */
+  color: var(--text);
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family:'SimpsonFont', sans-serif;
+}
