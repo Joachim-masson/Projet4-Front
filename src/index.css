@@ -16,6 +16,7 @@
   --border: #477E80;
   --bonus: #AA9B43;
   --cloud: #F5F0E9;
+  --simpson-blue : #1292F0;
 }
 
 /* Déclaration de la police */
@@ -97,4 +98,5 @@ button {
 
 h1, h2, h3, h4, h5, h6 {
   font-family:'SimpsonFont', sans-serif;
+  text-align: center;
 }
