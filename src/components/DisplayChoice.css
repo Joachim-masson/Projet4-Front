@@ -1,0 +1,44 @@
+.DisplayChoice-Section{
+  display : flex;
+  justify-content: space-around;
+  margin: 2rem 0;
+}
+
+.characterCard-article-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 20px;
+  justify-items: center;
+}
+
+.displayChoiceCard {
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+}
+
+.DisplayChoice-SeeMore {
+  background-color: #4caf50;
+  color: var(--cloud);
+  border: 3px solid var(--border);
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px var(--bonus);
+  transition: all 0.1s;
+  text-decoration: none;
+  margin: 10px 0;
+}
+
+.DisplayChoice-SeeMore:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #000;
+}
+
+.DisplayChoice-SeeMore:active {
+  transform: translate(0, 0);
+  box-shadow: 2px 2px 0px #000;
+}
