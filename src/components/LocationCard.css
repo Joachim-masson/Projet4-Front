@@ -1,0 +1,45 @@
+.location-card {
+  background-color: #fff;
+  border: 3px solid #000;
+  padding: 10px;
+  width: 280px;
+  /* On incline légèrement la carte pour l'effet photo jetée sur une table */
+  transform: rotate(-1deg);
+  transition: all 0.3s ease;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.location-card:hover {
+  transform: rotate(0deg) scale(1.05);
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.location-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border: 2px solid #000;
+}
+
+.location-card h3 {
+  font-family: 'Comic Sans MS', 'marker felt', cursive; /* Style écriture manuscrite */
+  color: #125ea5;
+  margin: 15px 0 5px 0;
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+/* Petit effet "punaise" ou "scotch" optionnel en haut */
+.location-card::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  width: 40px;
+  height: 15px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0,0,0,0.1);
+}

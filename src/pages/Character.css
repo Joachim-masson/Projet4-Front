@@ -29,3 +29,16 @@
   transform: translate(0, 0);
   box-shadow: 2px 2px 0px #000;
 }
+
+.search-input {
+  width: 250px;
+  outline: none;
+  transition: border-color 0.2s;
+  background-color: var(--cloud);
+  border-color: var(--border);
+}
+
+.search-input:focus {
+  border-color: var(--border); 
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}

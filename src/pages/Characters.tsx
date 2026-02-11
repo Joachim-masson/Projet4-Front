@@ -18,6 +18,9 @@ export default function Characters () {
   const [characters, setCharacters] = useState<CharacterI[]>([]);
   const [editingCharacter, setEditingCharacter] = useState<CharacterI | null>(null);
 
+  //Pour la search barre
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
   // État pour la modale d'ajout
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   // Fonction pour ajouter un personnage
@@ -85,25 +88,43 @@ export default function Characters () {
   },[]);
   
 
+  // Logique de filtrage 
+  const filteredCharacters = characters.filter((char) =>
+  char.name.toLowerCase().includes(searchTerm.toLowerCase())
+);
+
   return (
     <main>
       <h1>Les Personnages</h1>
-      <div className="header-section" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: '3rem' }}>
-        
+      <div className="header-section" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight: '3rem', paddingLeft: '3rem',gap: '1rem' }}>
+        {/* Barre de recherche */}
+        <input
+          type="text"
+          placeholder="Rechercher un personnage..."
+          className="search-input"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{
+            padding: '10px',
+            border: '3px solid #000',
+            borderRadius: '10px',
+            fontFamily: 'sans-serif'
+          }}
+        />
         <button className="btn-add-main" onClick={() => setIsAddModalOpen(true)}>
           + Ajouter un personnage
         </button>
       </div>  
       <div className="characters-container">
-      {characters ? 
-        (characters.map((char) => (
+      {filteredCharacters.length > 0 ? 
+        (filteredCharacters.map((char) => (
           <CharacterCard 
             key={char.idcharacters} 
             onDeleteSuccess={handleDeleteSuccess}
             character={char} 
             onEdit={() => setEditingCharacter(char)}
           />
-        ))) : <p>Personnages en cours de chargement...</p>
+        ))) : <p>Aucun personnage ne correspond à votre recherche...</p>
       }
 
       {/* Modale d'ajout */}

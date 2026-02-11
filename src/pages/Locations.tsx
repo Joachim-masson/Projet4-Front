@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import LocationCard from "../components/LocationCard"
+import "./Locations.css"
 
 export interface LocationI {
   idlocation: number,
@@ -27,13 +28,16 @@ export default function Locations () {
     ? locations 
     : locations.filter(loc => loc.idlocation === parseInt(selectedLocationId));
 
+  //Permet un affichage différent lorsqu'il n'y a qu'une image  
+  const isSingle = filteredLocations.length === 1;  
+
   return (
   <main>
       <h1>Les Lieux</h1>
 
       {/* Menu déroulant de recherche */}
       <div className="search-container" style={{ marginBottom: '20px' }}>
-        <label htmlFor="location-select">Rechercher un lieu : </label>
+        <label htmlFor="location-select"> </label>
         <select 
           id="location-select"
           value={selectedLocationId}
@@ -52,10 +56,9 @@ export default function Locations () {
       <section className="locations-grid">
         {filteredLocations.length > 0 ? (
           filteredLocations.map((loc) => (
-            <LocationCard 
-              key={loc.idlocation} 
-              location={loc} 
-            />
+            <div key={loc.idlocation} className={isSingle ? "single-card-wrapper" : ""}>
+              <LocationCard location={loc} />
+            </div>
           ))
         ) : (
           <p>Lieux en cours de chargement ou aucun résultat...</p>
