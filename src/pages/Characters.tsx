@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import CharacterCard from "../components/CharacterCard";
+import AddModal from "../components/AddModal";
+import EditModal from "../components/EditModal";
 import "./Character.css"
 
 export interface CharacterI {
@@ -14,7 +16,66 @@ export interface CharacterI {
 
 export default function Characters () {
   const [characters, setCharacters] = useState<CharacterI[]>([]);
+  const [editingCharacter, setEditingCharacter] = useState<CharacterI | null>(null);
 
+  // État pour la modale d'ajout
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  // Fonction pour ajouter un personnage
+  const handleAdd = async (newData: FormData) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/characters`, {
+        method: 'POST',
+        body: newData,
+      });
+
+      if (response.ok) {
+        const createdChar: CharacterI = await response.json();
+        // On ajoute le nouveau personnage à la liste existante
+        setCharacters((prev) => [...prev, createdChar]);
+        setIsAddModalOpen(false);
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'ajout :", error);
+    }
+  };
+
+
+  // Pour modifier l'un des personnages
+  const handleUpdate = async (updatedData: FormData) => {
+    // Appel fetch PUT vers ton API
+    // On récupère l'ID depuis l'état du personnage en cours d'édition
+    const id = editingCharacter?.idcharacters;
+
+    if (!id) return;
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/characters/${id}`, {
+      method: 'PATCH',
+      body: updatedData, // On envoie le FormData pur
+      // NE PAS mettre de Headers Content-Type ici
+      });
+
+      if (response.ok) {
+      // Ton backend doit renvoyer le personnage mis à jour en JSON
+      const updatedCharFromServer: CharacterI = await response.json();
+
+      setCharacters((prev) =>
+        prev.map((char) =>
+          char.idcharacters === id ? updatedCharFromServer : char
+        )
+      );
+      setEditingCharacter(null);
+      }
+    } catch (error) {
+    console.error("Erreur lors de la mise à jour :", error);
+    }
+  }
+  // Pour supprimer l'un des personnages
+  const handleDeleteSuccess = (id: number) => {
+    setCharacters((prev) => prev.filter(char => char.idcharacters !== id));
+  };
+
+  //Charge tous les personnages
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/characters`)
     .then((response) => response.json())
@@ -27,9 +88,40 @@ export default function Characters () {
   return (
     <main>
       <h1>Les Personnages</h1>
+      <div className="header-section" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingRight: '3rem' }}>
+        
+        <button className="btn-add-main" onClick={() => setIsAddModalOpen(true)}>
+          + Ajouter un personnage
+        </button>
+      </div>  
       <div className="characters-container">
-      {characters ? (characters.map((char) => <CharacterCard key={char.idcharacters} character={char}/>)) : <p>Personnages en cours de chargement...</p>
+      {characters ? 
+        (characters.map((char) => (
+          <CharacterCard 
+            key={char.idcharacters} 
+            onDeleteSuccess={handleDeleteSuccess}
+            character={char} 
+            onEdit={() => setEditingCharacter(char)}
+          />
+        ))) : <p>Personnages en cours de chargement...</p>
       }
+
+      {/* Modale d'ajout */}
+      {isAddModalOpen && (
+        <AddModal 
+          onClose={() => setIsAddModalOpen(false)} 
+          onSave={handleAdd} 
+        />
+      )}
+
+      {/* Modale de suppression et d'ajout directement sur les cartes */}
+      {editingCharacter && (
+        <EditModal 
+          character={editingCharacter} 
+          onClose={() => setEditingCharacter(null)} 
+          onSave={handleUpdate}
+        />
+      )}
       </div>
     </main>
   )

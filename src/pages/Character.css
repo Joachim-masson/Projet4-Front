@@ -5,3 +5,27 @@
   padding: 20px;
   justify-items: center;
 }
+
+/* BOUTON AJOUT D'UN PERSONNAGE */
+.btn-add-main {
+  background-color: #4caf50;
+  color: var(--cloud);
+  border: 3px solid var(--border);
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px var(--bonus);
+  transition: all 0.1s;
+}
+
+.btn-add-main:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #000;
+}
+
+.btn-add-main:active {
+  transform: translate(0, 0);
+  box-shadow: 2px 2px 0px #000;
+}
