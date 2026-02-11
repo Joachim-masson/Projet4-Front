@@ -14,6 +14,8 @@ import Error404 from "../src/pages/Error404.tsx"
 import Characters from './pages/Characters.tsx';
 import Locations from './pages/Locations.tsx';
 import UserManager from './pages/UserManager.tsx';
+import Connexion from "./pages/Connexion.tsx";
+import { AuthProvider } from './context/AuthContext.tsx';
 
 /* ************************************************************************* */
 
@@ -37,6 +39,10 @@ const router = createBrowserRouter([
         path: "/locations",
         element: <Locations />,
       },
+      {
+        path: "/connexion",
+        element: <Connexion/>,
+      },
        {
         path: "/userManager",
         element: <UserManager />,
@@ -51,7 +57,10 @@ if (rootElement == null) {
 
 // Render the app inside the root element
 createRoot(rootElement).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
+  <AuthProvider>
+    <StrictMode>
+      <RouterProvider router={router} />
+    </StrictMode>,
+  </AuthProvider>
+
 );

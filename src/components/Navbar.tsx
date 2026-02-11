@@ -1,38 +1,35 @@
 import { NavLink, useNavigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"; // Import du hook
 import "./Navbar.css"
 
 export default function Navbar () {
-  //  Ces valeurs proviendront plus tard de ton Context (ex: AuthContext)
-  const isLoggedIn = true; // À remplacer par ton état réel
-  const userRole = "admin";  // À remplacer par "admin" par exemple
+  const { user, logout } = useAuth(); // On récupère l'utilisateur et la fonction logout
   const navigate = useNavigate();
+    
 
-  const handleLogout = () => {
-    // Logique de déconnexion (supprimer le JWT, etc.)
-    console.log("Déconnexion...");
-    navigate("/pages/Connexion");
+ const handleLogout = (e: React.MouseEvent) => {
+    e.preventDefault();
+    logout();
+    navigate("/Connexion"); // Adapte le chemin selon tes routes
   };
   return (
-  <>
-
     <nav className="navbar">
-      
       <NavLink to="/">Accueil</NavLink>
       <NavLink to="/characters">Personnages</NavLink>
       <NavLink to="/locations">Lieux</NavLink>
-      {/* Affichage conditionnel de Gestion */}
-      {isLoggedIn && userRole === "admin" && (
+
+      {/* On vérifie si l'utilisateur est un admin (ex: "fullAdmin") */}
+      {user && (user.habilitation === "fullAdmin" || user.habilitation === "updateAdmin") && (
         <NavLink to="/userManager">Gestion</NavLink>
       )}
 
-      {/* Switch Sign In / Sign Out */}
-      {isLoggedIn ? (
-        <a href="#" onClick={handleLogout}>Sign Out</a>
+      {user ? (
+        <div className="nav-auth">
+          <a href="#" onClick={handleLogout}>Sign Out</a>
+        </div>
       ) : (
-        <NavLink to="/pages/Connexion">Sign In</NavLink>
+        <NavLink to="/Connexion">Sign In</NavLink>
       )}
     </nav>
-    
-   </>
-  )
+  );
 }

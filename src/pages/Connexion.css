@@ -1,0 +1,28 @@
+.login-container{
+  display:flex;
+  justify-content: center;
+  margin: 10rem auto;
+  
+}
+
+.modal-content{
+  box-shadow: 6px 6px 0px var(--bonus);
+}
+.login-div{
+  display: flex;
+  flex-direction: column;
+}
+
+.login-div button{
+  background-color: #4caf50;
+  color: var(--cloud);
+  border: 3px solid var(--border);
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px var(--bonus);
+  transition: all 0.1s;
+  margin-top: 2rem;
+}
