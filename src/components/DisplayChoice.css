@@ -1,10 +1,10 @@
 .DisplayChoice-Section{
   display : flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   margin: 2rem 0;
 }
 
-.characterCard-article-body {
+.displayChoice-characterCard-article-body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 30px;

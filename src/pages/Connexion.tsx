@@ -22,7 +22,7 @@ export default function Connexion() {
       if (response.ok) {
         const data = await response.json();
         login(data.user); // On stocke l'user dans le contexte
-        navigate("/");    // Redirection vers l'accueil
+        navigate("/home");    // Redirection vers l'accueil
       } else {
         alert("Identifiants incorrects");
       }

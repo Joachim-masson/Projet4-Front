@@ -108,7 +108,7 @@ export default function Characters () {
   return (
     <main>
       <h1>Les Personnages</h1>
-      <div className="header-section" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight: '3rem', paddingLeft: '3rem',gap: '1rem' }}>
+      <div className="Characters-containerSearchAdd">
         {/* Barre de recherche */}
         <input
           type="text"

@@ -9,6 +9,7 @@ import App from './App.tsx'
 /* ************************************************************************* */
 
 // Import the main app component
+import Accueil from './pages/Accueil.tsx';
 import Characters from './pages/Characters.tsx';
 import Connexion from "./pages/Connexion.tsx";
 import Error404 from "../src/pages/Error404.tsx"
@@ -26,11 +27,16 @@ import { AuthProvider } from './context/AuthContext.tsx';
 
 const router = createBrowserRouter([
   {
-    element: <App />, // Renders the App component for the home page
+    // Cette route est l'entrée principale : pas de Navbar, pas de Footer
+    path: "/",
+    element: <Accueil />,
     errorElement: <Error404 />,
+  },
+  {
+    element: <App />, // Renders the App component for the home page
     children: [
       {
-        path: "/",
+        path: "/home",
         element: <Home />,
       },
        {

@@ -14,7 +14,7 @@ export default function Navbar () {
 };
   return (
     <nav className="navbar">
-      <NavLink to="/">Accueil</NavLink>
+      <NavLink to="/home">Accueil</NavLink>
       <NavLink to="/characters">Personnages</NavLink>
       <NavLink to="/locations">Lieux</NavLink>
 

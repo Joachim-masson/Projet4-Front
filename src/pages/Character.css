@@ -42,3 +42,12 @@
   border-color: var(--border); 
   box-shadow: 0 0 5px rgba(0,0,0,0.2);
 }
+
+.Characters-containerSearchAdd {
+  display: flex ;
+  justify-Content : space-between;
+  align-Items: center;
+  padding-Right: 3rem;
+  padding-Left: 3rem;
+  gap: 1rem;
+}
