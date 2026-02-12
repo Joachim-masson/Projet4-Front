@@ -1,11 +1,11 @@
-import home from "../assets/home.webp";
+import home2 from "../assets/home2.webp";
 import DisplayChoice from "../components/DisplayChoice";
 import "./Home.css"
 
 function Home () {
   return (
   <main className="HomeMain">
-    <img src={home} className="HomeHero" />
+    <img src={home2} className="HomeHero" />
     <DisplayChoice />
   </main>
   )

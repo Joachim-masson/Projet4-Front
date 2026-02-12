@@ -1,11 +1,21 @@
 .HomeMain{
   display: flex;
   flex-direction: column;
+  
 }
 
-.HomeHero{
-  margin: 4rem;
+.HomeHero {
+  /* Limite la largeur de l'image (par exemple à 800px) */
+  max-width: 800px; 
+  /* S'assure que l'image reste responsive sur mobile */
+  width: 90%; 
+  
+  height: auto; /* Garde les proportions de l'image intactes */
+  
+  margin: 2rem auto; /* 2rem de marge haut/bas, centrage auto gauche/droite */
+  
   border: 3px solid var(--border);
   border-radius: 15px;
-  height: auto;
+  object-fit: cover; /* Ou contain selon le rendu souhaité */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Petit bonus pour le relief */
 }

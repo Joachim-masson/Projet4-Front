@@ -40,7 +40,7 @@ export default function DisplayChoice () {
     {firstCharacter ? (
       <div className="displayChoiceCard">
         <img src={`${API_URL}/uploads/${characters[0].portrait_path}`} alt={`Portrait du personnage :${characters[0].name}`}/>
-        <div className="characterCard-article-body">
+        <div className="displayChoice-characterCard-article-body">
           <h3>Personnages</h3>
         </div>
         <NavLink to="/characters" className="DisplayChoice-SeeMore"> Voir plus </NavLink>
@@ -52,7 +52,7 @@ export default function DisplayChoice () {
     {firstLocation ? (
       <div className="displayChoiceCard">
         <img src={`${API_URL}/uploads/${locations[0].img_path}`} alt={`Portrait du personnage :${locations[0].name}`}/>
-        <div className="characterCard-article-body">
+        <div className="displayChoice-characterCard-article-body">
           <h3>Lieux</h3>
         </div>
         <NavLink to="/locations" className="DisplayChoice-SeeMore"> Voir plus </NavLink>

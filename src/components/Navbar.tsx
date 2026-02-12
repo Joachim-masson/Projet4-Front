@@ -7,14 +7,14 @@ export default function Navbar () {
   const navigate = useNavigate();
     
 
- const handleLogout = (e: React.MouseEvent) => {
-    e.preventDefault();
-    logout();
-    navigate("/Connexion"); // Adapte le chemin selon tes routes
-  };
+ const handleLogout = async (e: React.MouseEvent) => {
+  e.preventDefault();
+  await logout(); // On attend que le cookie soit supprimé
+  navigate("/Connexion");
+};
   return (
     <nav className="navbar">
-      <NavLink to="/">Accueil</NavLink>
+      <NavLink to="/home">Accueil</NavLink>
       <NavLink to="/characters">Personnages</NavLink>
       <NavLink to="/locations">Lieux</NavLink>
 

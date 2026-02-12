@@ -108,20 +108,14 @@ export default function Characters () {
   return (
     <main>
       <h1>Les Personnages</h1>
-      <div className="header-section" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight: '3rem', paddingLeft: '3rem',gap: '1rem' }}>
+      <div className="Characters-containerSearchAdd">
         {/* Barre de recherche */}
         <input
           type="text"
           placeholder="Rechercher un personnage..."
-          className="search-input"
+          className="Characters-search-input"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            padding: '10px',
-            border: '3px solid #000',
-            borderRadius: '10px',
-            fontFamily: 'sans-serif'
-          }}
         />
         {/* Bouton Ajouter visible uniquement si autorisé */}
         {canCreate && (

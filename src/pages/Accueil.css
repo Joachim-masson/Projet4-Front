@@ -1,0 +1,21 @@
+.Accueil-container {
+  display: flex;
+  justify-content: center; /* Centre horizontalement */
+  align-items: center;     /* Centre verticalement */
+  height: 100dvh;           /* Prend 100% de la hauteur de l'écran */
+  width: 100vw;            /* Prend 100% de la largeur de l'écran */
+  overflow: hidden;        /* Évite les barres de défilement parasites */
+  background-color: #000;  /* Optionnel : fond noir si l'image est moins large que l'écran */
+}
+
+.Accueil-Homer {
+  height: 100dvh;           /* L'image fait exactement la hauteur de l'écran */
+  width: auto;             /* Garde le ratio de l'image (évite qu'elle soit écrasée) */
+  display: block;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.Accueil-Homer:hover {
+  transform: scale(1.02);  /* Petit effet au survol pour inciter au clic */
+}

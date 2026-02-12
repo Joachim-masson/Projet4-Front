@@ -6,4 +6,5 @@
 
 main {
   flex: 1; /* Ce composant va "pousser" pour prendre tout l'espace disponible */
+  flex-grow: 1;
 }

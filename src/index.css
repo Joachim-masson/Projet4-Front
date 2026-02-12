@@ -73,23 +73,34 @@
 *::after {
   box-sizing: border-box;
 }
-html,
-body,
-#root {
-  /* height: 100%; */
-}
-html,
-body {
+
+html {
+  height: 100%; /* Référence de base pour les % */
   margin: 0;
   padding: 0;
 }
+
+
 body {
-  background: var( --background);
+  margin: 0;
+  padding: 0;
+  min-height: 100%; /* Utilise 100% de html */
+  display: flex;
+  flex-direction: column;
+  background: var(--background); /* Ton jaune vient de cette variable */
   font-family: 'Helvetica', Arial, sans-serif;
   font-weight: normal;
-  line-height: 1.6; /* Meilleure lisibilité pour les paragraphes */
   color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
 }
+#root {
+  /* On force le conteneur React à occuper tout l'espace du body */
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+}
+
 
 a,
 button {

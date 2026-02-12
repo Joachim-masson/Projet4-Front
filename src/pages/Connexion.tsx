@@ -16,12 +16,13 @@ export default function Connexion() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
+        credentials: "include",
       });
 
       if (response.ok) {
         const data = await response.json();
         login(data.user); // On stocke l'user dans le contexte
-        navigate("/");    // Redirection vers l'accueil
+        navigate("/home");    // Redirection vers l'accueil
       } else {
         alert("Identifiants incorrects");
       }
@@ -40,7 +41,7 @@ export default function Connexion() {
           <label>Mot de passe</label>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           <button type="submit" className="btn-save">Se connecter</button>
-          <Link to="/inscription" style={{ marginTop: '15px', textAlign: 'center', display: 'block', fontSize: '0.9rem' }}>
+          <Link to="/inscription" className="Connexion-linkConnexion">
           Pas encore de compte ? Créer un profil administrateur
           </Link>
         </div>
