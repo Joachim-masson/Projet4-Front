@@ -8,11 +8,21 @@ interface LocationCardProps {
 }
 
 export default function LocationCard({ location, onEdit, onDeleteSuccess }: LocationCardProps) {
+  
   const handleDelete = async () => {
+    console.log("ID envoyé au DELETE du LocationCard:", location.idlocation);
     if (window.confirm("Supprimer ce lieu ?")) {
+      try{
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/location/${location.idlocation}`, { method: 'DELETE' });
-      if (res.ok) onDeleteSuccess?.(location.idlocation);
-    }
+      if (res.ok) {
+        onDeleteSuccess?.(location.idlocation);
+      } else {
+        const errorData = await res.json();
+        alert(`Erreur: ${errorData.message}`);
+      }
+      } catch (error) {
+        console.error("Erreur réseau :", error);
+      }}
   };
 
   return (

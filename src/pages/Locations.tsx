@@ -33,7 +33,9 @@ export default function Locations() {
   useEffect(() => {
     fetch(API_URL)
       .then((res) => res.json())
-      .then((data) => setLocations(data));
+      .then((data) => {
+        console.log("Données reçues du serveur sur Locations.tsx:", data[0]);
+        setLocations(data)});
   }, []);
 
   useEffect(() => {
@@ -46,23 +48,53 @@ export default function Locations() {
   }, [selectedLocationId]);
 
   const handleAdd = async (formData: FormData) => {
-    const res = await fetch(API_URL, { method: "POST", body: formData });
-    if (res.ok) {
-      const newLoc = await res.json();
-      setLocations([...locations, newLoc]);
-      setIsAddModalOpen(false);
+    try {
+      const res = await fetch(API_URL, { method: "POST", body: formData });
+      if (res.ok) {
+        const newLoc = await res.json();
+      // On s'assure que newLoc contient idlocation, name et img_path
+        setLocations((prev) => [...prev, newLoc]);
+        setIsAddModalOpen(false);
+      } else {
+        const errorText = await res.text();
+        console.error("Erreur serveur:", errorText);
+      }
+    } catch (err) {
+      console.error("Erreur réseau:", err);
     }
   };
 
   const handleUpdate = async (formData: FormData) => {
     if (!editingLocation) return;
-    const res = await fetch(`${API_URL}/${editingLocation.idlocation}`, { 
-      method: "PATCH", 
-      body: formData 
-    });
-    if (res.ok) {
-      // Recharger les données pour simplifier
-      window.location.reload(); 
+
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/location/${editingLocation.idlocation}`, {
+        method: "PATCH",
+        body: formData,
+      });
+
+      if (res.ok) {
+        // On récupère l'objet complet (updatedLocation du back)
+        const updatedLoc = await res.json();
+        // On met à jour la liste localement
+        setLocations((prev) =>
+          prev.map((loc) =>
+            loc.idlocation === editingLocation.idlocation ? updatedLoc : loc
+          )
+        );
+        
+        // Fermer la modale
+        setEditingLocation(null);
+        
+        // Optionnel : Si le lieu modifié était celui sélectionné, on peut forcer 
+        // un rechargement des personnages liés
+        if (selectedLocationId === editingLocation.idlocation.toString()) {
+            // Déclencher manuellement le refresh des persos si nécessaire
+            setSelectedLocationId("all"); // Petit "reset" rapide ou appel fetch characters
+        }
+      }
+    } catch (err) {
+      console.error("Erreur lors de l'update front:", err);
     }
   };
 
