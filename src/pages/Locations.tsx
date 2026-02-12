@@ -1,103 +1,131 @@
-import { useEffect, useState } from "react"
-import LocationCard from "../components/LocationCard"
+import { useEffect, useState } from "react";
+import LocationCard from "../components/LocationCard";
+import AddLocationModal from "../components/AddLocationModal";
+import EditLocationModal from "../components/EditLocationModal";
+import { useAuth } from "../context/AuthContext";
 import type { CharacterI } from "./Characters";
-import "./Locations.css"
+import "./Locations.css";
 
 export interface LocationI {
-  idlocation: number,
-  img_path : string,
-  name: string,
+  idlocation: number;
+  img_path: string;
+  name: string;
 }
 
-export default function Locations () {
+export default function Locations() {
+  const { user } = useAuth();
   const [locations, setLocations] = useState<LocationI[]>([]);
-
-  // État pour stocker l'ID du lieu sélectionné
   const [selectedLocationId, setSelectedLocationId] = useState<string>("all");
-  // État pour les personnages liés
   const [linkedCharacters, setLinkedCharacters] = useState<CharacterI[]>([]);
+  
+  // États pour les modales
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [editingLocation, setEditingLocation] = useState<LocationI | null>(null);
 
-    //Charge tous les lieux
+  // --- Permissions ---
+  const isFullAdmin = user?.habilitation === "fullAdmin";
+  const canCreate = isFullAdmin || user?.habilitation === "createAdmin";
+  const canUpdate = isFullAdmin || user?.habilitation === "updateAdmin";
+  const canDelete = isFullAdmin || user?.habilitation === "deleteAdmin";
+
+  const API_URL = `${import.meta.env.VITE_API_URL}/api/location`;
+
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/location`)
-    .then((response) => response.json())
-    .then((data) => {
-      setLocations(data);
-    })
-  },[]);
- 
-  //Charger les personnages quand le lieu change
+    fetch(API_URL)
+      .then((res) => res.json())
+      .then((data) => setLocations(data));
+  }, []);
+
   useEffect(() => {
     if (selectedLocationId !== "all") {
-      fetch(`${import.meta.env.VITE_API_URL}/api/location/${selectedLocationId}/characters`)
+      fetch(`${API_URL}/${selectedLocationId}/characters`)
         .then((res) => res.json())
         .then((data) => setLinkedCharacters(data))
         .catch(() => setLinkedCharacters([]));
-    } else {
-      setLinkedCharacters([]);
     }
   }, [selectedLocationId]);
 
-  // Logique de filtrage
+  const handleAdd = async (formData: FormData) => {
+    const res = await fetch(API_URL, { method: "POST", body: formData });
+    if (res.ok) {
+      const newLoc = await res.json();
+      setLocations([...locations, newLoc]);
+      setIsAddModalOpen(false);
+    }
+  };
+
+  const handleUpdate = async (formData: FormData) => {
+    if (!editingLocation) return;
+    const res = await fetch(`${API_URL}/${editingLocation.idlocation}`, { 
+      method: "PATCH", 
+      body: formData 
+    });
+    if (res.ok) {
+      // Recharger les données pour simplifier
+      window.location.reload(); 
+    }
+  };
+
+  const handleDeleteSuccess = (id: number) => {
+    setLocations(locations.filter(l => l.idlocation !== id));
+    setSelectedLocationId("all");
+  };
+
   const filteredLocations = selectedLocationId === "all" 
     ? locations 
     : locations.filter(loc => loc.idlocation === parseInt(selectedLocationId));
 
-  //Permet un affichage différent lorsqu'il n'y a qu'une image  
-  const isSingle = filteredLocations.length === 1;  
-
   return (
-  <main>
+    <main>
       <h1>Les Lieux</h1>
 
-      {/* Menu déroulant de recherche */}
-      <div className="search-container" style={{ marginBottom: '20px' }}>
-        <label htmlFor="location-select"> </label>
+      <div className="header-section" style={{ display: 'flex', gap: '1rem', padding: '0 3rem' }}>
         <select 
-          id="location-select"
           value={selectedLocationId}
           onChange={(e) => setSelectedLocationId(e.target.value)}
           className="location-select"
         >
           <option value="all">-- Tous les lieux --</option>
           {locations.map((loc) => (
-            <option key={loc.idlocation} value={loc.idlocation}>
-              {loc.name}
-            </option>
+            <option key={loc.idlocation} value={loc.idlocation}>{loc.name}</option>
           ))}
         </select>
+
+        {canCreate && (
+          <button className="btn-add-main" onClick={() => setIsAddModalOpen(true)}>
+            + Ajouter un lieu
+          </button>
+        )}
       </div>
 
       <section className="locations-grid">
-        {filteredLocations.length > 0 ? (
-          filteredLocations.map((loc) => (
-            <div key={loc.idlocation} className={isSingle ? "single-card-wrapper" : ""}>
-              <LocationCard location={loc} />
-
-              {/* AFFICHAGE DES PERSONNAGES SI UN LIEU EST SELECTIONNÉ */}
-              {selectedLocationId !== "all" && (
-                <div className="linked-characters-section">
-                  <h4>Habitants / Visiteurs :</h4>
-                  <div className="mini-char-list">
-                    {linkedCharacters.length > 0 ? (
-                      linkedCharacters.map(char => (
-                        <div key={char.idcharacters} className="mini-char-item">
-                          <img src={`${import.meta.env.VITE_API_URL}/uploads/${char.portrait_path}`} alt={char.name} />
-                          <p>{char.name}</p>
-                        </div>
-                      ))
-                    ) : (
-                      <p>Aucun personnage lié à ce lieu.</p>
-                    )}
-                  </div>
+        {filteredLocations.map((loc) => (
+          <div key={loc.idlocation}>
+            <LocationCard 
+              location={loc} 
+              onDeleteSuccess={canDelete ? handleDeleteSuccess : undefined}
+              onEdit={canUpdate ? () => setEditingLocation(loc) : undefined}
+            />
+            
+            {selectedLocationId !== "all" && (
+              <div className="linked-characters-section">
+                <h4>Habitants / Visiteurs :</h4>
+                <div className="mini-char-list">
+                  {linkedCharacters.map(char => (
+                    <div key={char.idcharacters} className="mini-char-item">
+                      <img src={`${import.meta.env.VITE_API_URL}/uploads/${char.portrait_path}`} alt={char.name} />
+                      <p>{char.name}</p>
+                    </div>
+                  ))}
                 </div>
-              )}
-            </div>
-          ))
-        ) : (
-          <p>Lieux en cours de chargement ou aucun résultat...</p>
-        )}
+              </div>
+            )}
+          </div>
+        ))}
       </section>
+
+      {isAddModalOpen && <AddLocationModal onSave={handleAdd} onClose={() => setIsAddModalOpen(false)} />}
+      {editingLocation && <EditLocationModal location={editingLocation} onSave={handleUpdate} onClose={() => setEditingLocation(null)} />}
     </main>
-  )
+  );
 }

@@ -3,16 +3,26 @@ import "./LocationCard.css"
 
 interface LocationCardProps {
   location: LocationI;
+  onEdit?: () => void;
+  onDeleteSuccess?: (id: number) => void;
 }
 
-export default function LocationCard ({location}: LocationCardProps) {
-  
-  const API_URL = import.meta.env.VITE_API_URL
+export default function LocationCard({ location, onEdit, onDeleteSuccess }: LocationCardProps) {
+  const handleDelete = async () => {
+    if (window.confirm("Supprimer ce lieu ?")) {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/location/${location.idlocation}`, { method: 'DELETE' });
+      if (res.ok) onDeleteSuccess?.(location.idlocation);
+    }
+  };
 
   return (
     <div className="location-card">
-      <img src={`${API_URL}/uploads/${location.img_path}`} alt={`lieux :${location.name}`} />
+      <img src={`${import.meta.env.VITE_API_URL}/uploads/${location.img_path}`} alt={location.name} />
       <h3>{location.name}</h3>
-  </div>
-  )
+      <div className="actions">
+        {onEdit && <button onClick={onEdit} className="btn-edit">Modifier</button>}
+        {onDeleteSuccess && <button onClick={handleDelete} className="btn-delete">Supprimer</button>}
+      </div>
+    </div>
+  );
 }
