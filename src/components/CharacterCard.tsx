@@ -3,8 +3,8 @@ import "./CharacterCard.css"
 
 interface CharacterCardProps {
   character: CharacterI;
-  onEdit: () => void;
-  onDeleteSuccess: (id: number) => void;
+  onEdit?: () => void;
+  onDeleteSuccess?: (id: number) => void;
 }
 
 export default function CharacterCard ({character, onEdit, onDeleteSuccess}: CharacterCardProps) {
@@ -12,7 +12,8 @@ export default function CharacterCard ({character, onEdit, onDeleteSuccess}: Cha
 
   const handleEdit = () => {
     console.log(`Modifier le personnage ${character.idcharacters}`);
-    onEdit();
+    if(onEdit){
+      onEdit();}
   };
 
   const handleDelete = async () => {
@@ -24,8 +25,9 @@ export default function CharacterCard ({character, onEdit, onDeleteSuccess}: Cha
 
         if (response.ok) {
           alert("Personnage supprimé !");
-          // Appel d'une fonction passée en props pour rafraîchir la liste côté Parent
-          onDeleteSuccess(character.idcharacters);
+          // Appel d'une fonction passée en props , si elle existe, pour rafraîchir la liste côté Parent
+          if (onDeleteSuccess) {
+          onDeleteSuccess(character.idcharacters);}
         } else {
           alert("Erreur lors de la suppression");
         }
@@ -46,12 +48,10 @@ export default function CharacterCard ({character, onEdit, onDeleteSuccess}: Cha
         <p><span className="label">Description:</span> {character.description}</p>
       </div>
       <div className="character-card-actions">
-        <button className="btn-edit" onClick={handleEdit}>
-          Modifier
-        </button>
-        <button className="btn-delete" onClick={handleDelete}>
+        {onEdit && <button className="btn-edit" onClick={handleEdit}>Modifier</button>}
+        {onDeleteSuccess &&<button className="btn-delete" onClick={handleDelete}>
           Supprimer
-        </button>
+        </button>}
       </div>
     </article>
   )

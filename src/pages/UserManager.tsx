@@ -20,7 +20,7 @@ export default function UserManager() {
       .then((res) => res.json())
       .then((data) => setUsers(data))
       .catch((err) => console.error("Erreur chargement users:", err));
-  }, []);
+  }, [API_URL]);
 
   // 2. Supprimer un utilisateur
   const handleDelete = async (id: number) => {
@@ -36,8 +36,15 @@ export default function UserManager() {
     }
   };
 
-  // 3. Modifier l'habilitation
+  // 3. Modifier l'habilitation avec Confirmation
   const handleHabilitationChange = async (id: number, newHab: string) => {
+    // AJOUT DE LA CONFIRMATION ICI
+    const confirmChange = window.confirm(
+      `Êtes-vous sûr de vouloir modifier le rôle de cet utilisateur vers "${newHab}" ?`
+    );
+
+    if (!confirmChange) return; // On arrête tout si l'admin annule
+
     try {
       const res = await fetch(`${API_URL}/${id}`, {
         method: "PATCH",

@@ -15,6 +15,7 @@ import Characters from './pages/Characters.tsx';
 import Locations from './pages/Locations.tsx';
 import UserManager from './pages/UserManager.tsx';
 import Connexion from "./pages/Connexion.tsx";
+import ProtectedRoute from './components/ProtectedRoute.tsx';
 import { AuthProvider } from './context/AuthContext.tsx';
 
 /* ************************************************************************* */
@@ -45,7 +46,10 @@ const router = createBrowserRouter([
       },
        {
         path: "/userManager",
-        element: <UserManager />,
+        element: 
+        <ProtectedRoute requiredRole="fullAdmin">
+          <UserManager />
+        </ProtectedRoute>,
       },]
     }])
 

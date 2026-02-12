@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import CharacterCard from "../components/CharacterCard";
 import AddModal from "../components/AddModal";
 import EditModal from "../components/EditModal";
+import { useAuth } from "../context/AuthContext";
 import "./Character.css"
 
 export interface CharacterI {
@@ -15,18 +16,36 @@ export interface CharacterI {
 
 
 export default function Characters () {
+  const { user } = useAuth(); // Récupération de l'utilisateur connecté
   const [characters, setCharacters] = useState<CharacterI[]>([]);
   const [editingCharacter, setEditingCharacter] = useState<CharacterI | null>(null);
-
-  //Pour la search barre
+  // Pour la search barre
   const [searchTerm, setSearchTerm] = useState<string>("");
-
   // État pour la modale d'ajout
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+  // --- Gestion des Permissions ---
+  const isFullAdmin = user?.habilitation === "fullAdmin";
+  const canCreate = isFullAdmin || user?.habilitation === "createAdmin";
+  const canUpdate = isFullAdmin || user?.habilitation === "updateAdmin";
+  const canDelete = isFullAdmin || user?.habilitation === "deleteAdmin";
+
+  const API_URL = `${import.meta.env.VITE_API_URL}/api/characters`;
+
+  //Charge tous les personnages
+  useEffect(() => {
+    fetch(API_URL)
+    .then((response) => response.json())
+    .then((data) => {
+      setCharacters(data);
+    })
+    .catch(err => console.error("Erreur fetch:", err));
+  },[API_URL]);
+
   // Fonction pour ajouter un personnage
   const handleAdd = async (newData: FormData) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/characters`, {
+      const response = await fetch(API_URL, {
         method: 'POST',
         body: newData,
       });
@@ -52,7 +71,7 @@ export default function Characters () {
     if (!id) return;
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/characters/${id}`, {
+      const response = await fetch(`${API_URL}/${id}`, {
       method: 'PATCH',
       body: updatedData, // On envoie le FormData pur
       // NE PAS mettre de Headers Content-Type ici
@@ -78,14 +97,7 @@ export default function Characters () {
     setCharacters((prev) => prev.filter(char => char.idcharacters !== id));
   };
 
-  //Charge tous les personnages
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/characters`)
-    .then((response) => response.json())
-    .then((data) => {
-      setCharacters(data);
-    })
-  },[]);
+
   
 
   // Logique de filtrage 
@@ -111,18 +123,20 @@ export default function Characters () {
             fontFamily: 'sans-serif'
           }}
         />
+        {/* Bouton Ajouter visible uniquement si autorisé */}
+        {canCreate && (
         <button className="btn-add-main" onClick={() => setIsAddModalOpen(true)}>
           + Ajouter un personnage
-        </button>
+        </button> )}
       </div>  
       <div className="characters-container">
       {filteredCharacters.length > 0 ? 
         (filteredCharacters.map((char) => (
           <CharacterCard 
             key={char.idcharacters} 
-            onDeleteSuccess={handleDeleteSuccess}
+            onDeleteSuccess={canDelete ? handleDeleteSuccess : undefined}
             character={char} 
-            onEdit={() => setEditingCharacter(char)}
+            onEdit={canUpdate ? () => setEditingCharacter(char) : undefined}
           />
         ))) : <p>Aucun personnage ne correspond à votre recherche...</p>
       }
