@@ -1,9 +1,13 @@
+import home from "../assets/home.webp";
+import DisplayChoice from "../components/DisplayChoice";
+import "./Home.css"
+
 function Home () {
   return (
-  <>
-    <h1>Home page</h1>
-    <p> Avec un peu de texte !!!</p>
-  </>
+  <main className="HomeMain">
+    <img src={home} className="HomeHero" />
+    <DisplayChoice />
+  </main>
   )
 }
 

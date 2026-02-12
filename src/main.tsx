@@ -9,11 +9,15 @@ import App from './App.tsx'
 /* ************************************************************************* */
 
 // Import the main app component
-import Home from "../src/pages/Home.tsx"
-import Error404 from "../src/pages/Error404.tsx"
 import Characters from './pages/Characters.tsx';
+import Connexion from "./pages/Connexion.tsx";
+import Error404 from "../src/pages/Error404.tsx"
+import Home from "../src/pages/Home.tsx"
+import Inscription from './components/Inscription.tsx';
 import Locations from './pages/Locations.tsx';
+import ProtectedRoute from './components/ProtectedRoute.tsx';
 import UserManager from './pages/UserManager.tsx';
+import { AuthProvider } from './context/AuthContext.tsx';
 
 /* ************************************************************************* */
 
@@ -37,9 +41,20 @@ const router = createBrowserRouter([
         path: "/locations",
         element: <Locations />,
       },
+      {
+        path: "/connexion",
+        element: <Connexion/>,
+      },
+      {
+      path: "/inscription",
+      element: <Inscription />,
+      },
        {
         path: "/userManager",
-        element: <UserManager />,
+        element: 
+        <ProtectedRoute requiredRole="fullAdmin">
+          <UserManager />
+        </ProtectedRoute>,
       },]
     }])
 
@@ -51,7 +66,10 @@ if (rootElement == null) {
 
 // Render the app inside the root element
 createRoot(rootElement).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
+  <AuthProvider>
+    <StrictMode>
+      <RouterProvider router={router} />
+    </StrictMode>,
+  </AuthProvider>
+
 );

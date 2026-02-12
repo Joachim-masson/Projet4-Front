@@ -1,0 +1,11 @@
+.HomeMain{
+  display: flex;
+  flex-direction: column;
+}
+
+.HomeHero{
+  margin: 4rem;
+  border: 3px solid var(--border);
+  border-radius: 15px;
+  height: auto;
+}

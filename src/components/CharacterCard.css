@@ -1,0 +1,102 @@
+/* Container de la carte */
+.characterCard-article {
+  background-color: var(--cloud);
+  border: 3px solid var(--border);
+  border-radius: 15px;
+  overflow: hidden;
+  width: 280px;
+  box-shadow: 8px 8px 0px var(--bonus); 
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  font-family: 'sans-serif';
+}
+
+.characterCard-article:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 12px 12px 0px var(--text);
+}
+
+/* Style de l'image */
+.characterCard-article img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-bottom: 3px solid var( --border);
+  background-color: var(--cloud);
+}
+
+/* Contenu textuel */
+.characterCard-article-body {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.characterCard-article h3 {
+  margin: 0;
+  color:var(--simpson-blue ); /* Bleu Simpsons */
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+.characterCard-article p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.characterCard-article-body .label {
+  font-weight: bold;
+  color: var(--text);
+}
+
+/* Container des boutons en bas de carte */
+.character-card-actions {
+  display: flex;
+  padding: 0 15px 15px 15px;
+  gap: 10px;
+  margin-top: auto; /* Pousse les boutons en bas si le texte est court */
+}
+
+/* Style de base des boutons */
+.character-card-actions button {
+  flex: 1;
+  padding: 8px;
+  border: 2px solid #000;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  font-family: 'sans-serif';
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+/* Bouton Modifier (Orange) */
+.btn-edit {
+  background-color: #f57c00;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #e65100;
+  transform: translateY(-2px);
+}
+
+/* Bouton Supprimer (Rouge) */
+.btn-delete {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #b71c1c;
+  transform: translateY(-2px);
+}
+
+/* Effet au clic */
+.character-card-actions button:active {
+  transform: translateY(0);
+}

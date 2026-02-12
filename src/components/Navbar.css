@@ -1,0 +1,42 @@
+.navbar {
+  background-image: url('../assets/Navbar.png');
+  background-size: cover;
+  background-position: center;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.navbar a{
+  text-decoration: none;
+  font-family: 'SimpsonFont', sans-serif;
+  color: var(--accent);
+  font-size: 1.5rem;
+  padding: 8px 16px;
+  border: 3px solid transparent;
+  transition: all 0.2s ease-in-out;
+  text-transform: uppercase;
+}
+/* Effet au survol */
+.navbar a:hover {
+  background-color: var(--cloud);
+ 
+  border: 3px solid var(--accent);
+  transform: rotate(-2deg) scale(1.1); /* Petit effet cartoon */
+}
+
+/* Style du lien actif (page actuelle) */
+.navbar a.active {
+  background-color: white;
+  border: 3px solid var(--accent);
+  box-shadow: 4px 4px 0px var(--accent);
+}
+
+/* Cas particulier du bouton Sign In / Sign Out */
+.navbar a[href$="Connexion"] {
+  background-color: #e74c3c; /* Rouge pour attirer l'oeil */
+  color: white;
+  border: 3px solid var(--accent);
+  border-radius: 10px;
+}

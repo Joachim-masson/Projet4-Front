@@ -1,0 +1,70 @@
+.location-select {
+  padding: 10px;
+  border: 3px solid #000;
+  border-radius: 10px;
+  background-color: #fff;
+  font-weight: bold;
+  font-family: 'sans-serif';
+  cursor: pointer;
+  outline: none;
+  margin-left: 10px;
+}
+
+.location-select:focus {
+  border-color: var(--border); 
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.locations-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centre horizontalement */
+  align-items: center;     /* Centre verticalement si besoin */
+  gap: 40px;
+  padding: 40px;
+  min-height: 50vh;        /* Donne de l'espace pour le centrage */
+}
+/* Quand une seule carte est présente */
+.single-card-wrapper {
+  transform: scale(1.4);   /* Agrandit la carte de 40% */
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin: 80px 0;          /* Ajoute un peu d'air autour */
+}
+
+/* Optionnel : Ajuster la taille de l'image interne pour qu'elle reste nette */
+.single-card-wrapper .location-card img {
+  height: 300px;           /* On augmente la hauteur de l'image interne */
+}
+
+.mini-char-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+.mini-char-item {
+  text-align: center;
+  width: 80px;
+}
+
+.mini-char-item img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Image ronde */
+  object-fit: cover;
+  border: 2px solid var(--bonus); /* Jaune Simpsons */
+}
+
+.mini-char-item p {
+  font-size: 0.7rem;
+  margin-top: 5px;
+  font-weight: bold;
+}

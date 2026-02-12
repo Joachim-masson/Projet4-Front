@@ -1,13 +1,35 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"; // Import du hook
+import "./Navbar.css"
 
 export default function Navbar () {
+  const { user, logout } = useAuth(); // On récupère l'utilisateur et la fonction logout
+  const navigate = useNavigate();
+    
+
+ const handleLogout = (e: React.MouseEvent) => {
+    e.preventDefault();
+    logout();
+    navigate("/Connexion"); // Adapte le chemin selon tes routes
+  };
   return (
-    <nav>
+    <nav className="navbar">
       <NavLink to="/">Accueil</NavLink>
       <NavLink to="/characters">Personnages</NavLink>
       <NavLink to="/locations">Lieux</NavLink>
-      <NavLink to="/userManager">Gestion</NavLink>
-      <NavLink to="/pages/Connexion">sign in</NavLink>
+
+      {/* On vérifie si l'utilisateur est un admin (ex: "fullAdmin") */}
+      {user && (user.habilitation === "fullAdmin" || user.habilitation === "updateAdmin") && (
+        <NavLink to="/userManager">Gestion</NavLink>
+      )}
+
+      {user ? (
+        <div className="nav-auth">
+          <a href="#" onClick={handleLogout}>Sign Out</a>
+        </div>
+      ) : (
+        <NavLink to="/Connexion">Sign In</NavLink>
+      )}
     </nav>
-  )
+  );
 }
