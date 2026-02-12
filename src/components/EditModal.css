@@ -96,3 +96,19 @@
 .modal-actions button:active {
   transform: scale(0.95);
 }
+
+.EditLocationModal-selection-list{
+  max-Height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-Radius: 5px; 
+}
+
+.AddLocationModal-selection-list{
+  max-Height: 150px;
+  overflow-Y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-Radius: 5px;
+}

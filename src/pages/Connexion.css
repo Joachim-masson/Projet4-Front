@@ -26,3 +26,23 @@
   transition: all 0.1s;
   margin-top: 2rem;
 }
+
+.Inscription-info-text{
+  font-Style: italic;
+  font-Size: 0.9rem;
+  margin-Bottom: 1rem;
+  color: #555;
+}
+
+.Inscription-linkConnexion{
+  margin-Top: 10px;
+  text-Align: center;
+  font-Size: 0.8rem;  
+}
+
+.Connexion-linkConnexion {
+  margin-Top: 15px;
+  text-Align: center;
+  display: block;
+  font-Size: 0.9rem; 
+}

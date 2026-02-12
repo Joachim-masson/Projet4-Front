@@ -57,7 +57,7 @@ export default function EditLocationModal({ location, onClose, onSave }: EditLoc
           <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files?.[0] || null)} />
 
           <label>Modifier les personnages liés :</label>
-          <div className="character-selection-list" style={{ maxHeight: '150px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px', borderRadius: '5px' }}>
+          <div className="EditLocationModal-selection-list">
             {allCharacters.map((char) => (
               <div key={char.idcharacters} className="checkbox-item">
                 <input

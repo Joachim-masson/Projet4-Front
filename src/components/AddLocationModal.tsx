@@ -50,7 +50,7 @@ export default function AddLocationModal({ onClose, onSave }: AddLocationModalPr
           <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files?.[0] || null)} />
 
           <label>Personnages présents ici :</label>
-          <div className="character-selection-list" style={{ maxHeight: '150px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px', borderRadius: '5px' }}>
+          <div className="AddLocationModal-selection-list">
             {characters.map((char) => (
               <div key={char.idcharacters} className="checkbox-item">
                 <input

@@ -111,7 +111,7 @@ export default function Locations() {
     <main>
       <h1>Les Lieux</h1>
 
-      <div className="header-section" style={{ display: 'flex', gap: '1rem', padding: '0 3rem' }}>
+      <div className="location-SelectAndAdd" >
         <select 
           value={selectedLocationId}
           onChange={(e) => setSelectedLocationId(e.target.value)}

@@ -43,7 +43,7 @@ export default function Inscription() {
         <h2>Créer un compte</h2>
         
         {/* Message informatif demandé */}
-        <p className="info-text" style={{ fontStyle: 'italic', fontSize: '0.9rem', marginBottom: '1rem', color: '#555' }}>
+        <p className="Inscription-info-text">
           Note : La création de compte est réservée aux utilisateurs souhaitant devenir administrateurs du site. 
           La consultation simple des personnages et lieux ne nécessite pas de compte.
         </p>
@@ -60,7 +60,7 @@ export default function Inscription() {
           
           <button type="submit" className="btn-save">S'inscrire</button>
           
-          <Link to="/connexion" style={{ marginTop: '10px', textAlign: 'center', fontSize: '0.8rem' }}>
+          <Link to="/connexion" className="Inscription-linkConnexion">
             Déjà un compte ? Se connecter
           </Link>
         </div>

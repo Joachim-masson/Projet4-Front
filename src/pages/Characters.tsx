@@ -113,15 +113,9 @@ export default function Characters () {
         <input
           type="text"
           placeholder="Rechercher un personnage..."
-          className="search-input"
+          className="Characters-search-input"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            padding: '10px',
-            border: '3px solid #000',
-            borderRadius: '10px',
-            fontFamily: 'sans-serif'
-          }}
         />
         {/* Bouton Ajouter visible uniquement si autorisé */}
         {canCreate && (

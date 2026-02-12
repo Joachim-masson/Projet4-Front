@@ -41,7 +41,7 @@ export default function Connexion() {
           <label>Mot de passe</label>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           <button type="submit" className="btn-save">Se connecter</button>
-          <Link to="/inscription" style={{ marginTop: '15px', textAlign: 'center', display: 'block', fontSize: '0.9rem' }}>
+          <Link to="/inscription" className="Connexion-linkConnexion">
           Pas encore de compte ? Créer un profil administrateur
           </Link>
         </div>
