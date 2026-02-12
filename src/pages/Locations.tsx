@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import LocationCard from "../components/LocationCard"
+import type { CharacterI } from "./Characters";
 import "./Locations.css"
 
 export interface LocationI {
@@ -13,6 +14,8 @@ export default function Locations () {
 
   // État pour stocker l'ID du lieu sélectionné
   const [selectedLocationId, setSelectedLocationId] = useState<string>("all");
+  // État pour les personnages liés
+  const [linkedCharacters, setLinkedCharacters] = useState<CharacterI[]>([]);
 
     //Charge tous les lieux
   useEffect(() => {
@@ -22,6 +25,18 @@ export default function Locations () {
       setLocations(data);
     })
   },[]);
+ 
+  //Charger les personnages quand le lieu change
+  useEffect(() => {
+    if (selectedLocationId !== "all") {
+      fetch(`${import.meta.env.VITE_API_URL}/api/location/${selectedLocationId}/characters`)
+        .then((res) => res.json())
+        .then((data) => setLinkedCharacters(data))
+        .catch(() => setLinkedCharacters([]));
+    } else {
+      setLinkedCharacters([]);
+    }
+  }, [selectedLocationId]);
 
   // Logique de filtrage
   const filteredLocations = selectedLocationId === "all" 
@@ -58,6 +73,25 @@ export default function Locations () {
           filteredLocations.map((loc) => (
             <div key={loc.idlocation} className={isSingle ? "single-card-wrapper" : ""}>
               <LocationCard location={loc} />
+
+              {/* AFFICHAGE DES PERSONNAGES SI UN LIEU EST SELECTIONNÉ */}
+              {selectedLocationId !== "all" && (
+                <div className="linked-characters-section">
+                  <h4>Habitants / Visiteurs :</h4>
+                  <div className="mini-char-list">
+                    {linkedCharacters.length > 0 ? (
+                      linkedCharacters.map(char => (
+                        <div key={char.idcharacters} className="mini-char-item">
+                          <img src={`${import.meta.env.VITE_API_URL}/uploads/${char.portrait_path}`} alt={char.name} />
+                          <p>{char.name}</p>
+                        </div>
+                      ))
+                    ) : (
+                      <p>Aucun personnage lié à ce lieu.</p>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           ))
         ) : (
