@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "./Connexion.css"
 
@@ -40,6 +40,9 @@ export default function Connexion() {
           <label>Mot de passe</label>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           <button type="submit" className="btn-save">Se connecter</button>
+          <Link to="/inscription" style={{ marginTop: '15px', textAlign: 'center', display: 'block', fontSize: '0.9rem' }}>
+          Pas encore de compte ? Créer un profil administrateur
+          </Link>
         </div>
       </form>
     </div>
