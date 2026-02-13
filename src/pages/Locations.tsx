@@ -132,7 +132,7 @@ export default function Locations() {
 
       <section className="locations-grid">
         {filteredLocations.map((loc) => (
-          <div key={loc.idlocation}>
+          <div key={loc.idlocation} className={selectedLocationId !== "all" ? "Location-container-single" : ""}>
             <LocationCard 
               location={loc} 
               onDeleteSuccess={canDelete ? handleDeleteSuccess : undefined}
