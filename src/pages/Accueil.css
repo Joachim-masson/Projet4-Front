@@ -1,21 +1,52 @@
 .Accueil-container {
   display: flex;
-  justify-content: center; /* Centre horizontalement */
-  align-items: center;     /* Centre verticalement */
-  height: 100dvh;           /* Prend 100% de la hauteur de l'écran */
-  width: 100vw;            /* Prend 100% de la largeur de l'écran */
-  overflow: hidden;        /* Évite les barres de défilement parasites */
-  background-color: #000;  /* Optionnel : fond noir si l'image est moins large que l'écran */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--background); 
+  cursor: url('../assets/Donut_cursor.cur'), auto;
+}
+.Accueil-link {
+   cursor: url('../assets/Donut_cursor.cur'), auto;
+  }
+
+.Homer-wrapper {
+  position: relative; /* Indispensable pour l'overlay */
+  display: inline-block;
+  
 }
 
 .Accueil-Homer {
-  height: 100dvh;           /* L'image fait exactement la hauteur de l'écran */
-  width: auto;             /* Garde le ratio de l'image (évite qu'elle soit écrasée) */
   display: block;
-  cursor: pointer;
-  transition: transform 0.3s ease;
+  max-width: 100%;
+  height: auto;
+  border: 3px solid var(--border);
+  border-radius: 15px;
 }
 
-.Accueil-Homer:hover {
-  transform: scale(1.02);  /* Petit effet au survol pour inciter au clic */
+/* On crée une zone invisible par dessus les yeux de l'image */
+.Eyes-overlay {
+  position: absolute;
+  top: 75.8%;    /* Ajuste ces % selon la position des yeux sur ton image */
+  left: 70%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 160px;   /* Ajuste l'écartement entre les deux pupilles */
+}
+
+.Eye-socket {
+  width: 120px;  /* Taille approximative de l'œil sur l'image */
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ /* background: rgba(255, 0, 0, 0.2); / Décommente pour voir où tu places les yeux*/
+}
+
+.Pupil {
+  width: 40px;
+  height: 40px;
+  background-color: #000;
+  border-radius: 50%;
+  will-change: transform;
 }
