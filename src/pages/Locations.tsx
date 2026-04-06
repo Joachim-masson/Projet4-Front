@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import LocationCard from "../components/LocationCard";
 import AddLocationModal from "../components/AddLocationModal";
 import EditLocationModal from "../components/EditLocationModal";
@@ -30,13 +30,17 @@ export default function Locations() {
 
   const API_URL = `${import.meta.env.VITE_API_URL}/api/location`;
 
-  useEffect(() => {
+  const synchroDisplay = useCallback(() => {
     fetch(API_URL)
       .then((res) => res.json())
       .then((data) => {
         console.log("Données reçues du serveur sur Locations.tsx:", data[0]);
         setLocations(data)});
   }, []);
+
+  useEffect(() => {
+    synchroDisplay();
+  }, [synchroDisplay]);
 
   useEffect(() => {
     if (selectedLocationId !== "all") {
@@ -92,6 +96,7 @@ export default function Locations() {
             // Déclencher manuellement le refresh des persos si nécessaire
             setSelectedLocationId("all"); // Petit "reset" rapide ou appel fetch characters
         }
+        synchroDisplay();
       }
     } catch (err) {
       console.error("Erreur lors de l'update front:", err);
