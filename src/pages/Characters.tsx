@@ -52,6 +52,7 @@ export default function Characters () {
 
       if (response.ok) {
         const createdChar: CharacterI = await response.json();
+        console.log("Personnage reçu du serveur :", createdChar);
         // On ajoute le nouveau personnage à la liste existante
         setCharacters((prev) => [...prev, createdChar]);
         setIsAddModalOpen(false);
@@ -101,9 +102,10 @@ export default function Characters () {
   
 
   // Logique de filtrage 
-  const filteredCharacters = characters.filter((char) =>
-  char.name.toLowerCase().includes(searchTerm.toLowerCase())
-);
+  const filteredCharacters = characters.filter((char) => {
+  const name = char?.name || ""; 
+  return name.toLowerCase().includes(searchTerm.toLowerCase());
+});
 
   return (
     <main>
