@@ -5,7 +5,7 @@ import "./Home.css"
 function Home () {
   return (
   <main className="HomeMain">
-    <img src={home2} className="HomeHero" />
+    <img src={home2} className="HomeHero" alt="la famille simpson sur leur canapé dans le ciel"/>
     <DisplayChoice />
   </main>
   )
